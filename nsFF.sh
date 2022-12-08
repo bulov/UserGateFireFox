@@ -9,7 +9,6 @@ GW=192.168.0.1
 User=${1}
 ID=$(id -u ${1})
 shift
-Prog=${1:-sudo -u ${User} /usr/bin/firefox "$@"}
 i=$((${ID}%100000))
 IP="192.168.$(((${i}>>8)%256)).$((${i}%256))/16"
 ip netns del   ${ID} &>/dev/null                       # Удаляем пространство имен
@@ -23,6 +22,7 @@ ip netns exec ${ID} ip link set dev lo up              # Активизируе�
 ip netns exec ${ID} ip addr add ${IP} dev v-${ID}      # Назначаем адрес.
 ip netns exec ${ID} ip link set dev v-${ID} up         # Активизируем устройство.
 ip netns exec ${ID} ip route add default via ${GW} dev v-${ID} # Маршрут по умолчанию.
-[ _"${Prog}" == _"/bin/bash"  ] && exec ip netns exec ${ID} /bin/bash --rcfile <(echo "PS1=\"${ID}> \"")
-exec ip netns exec ${ID} $Prog                         # Запускаем прогу в пространство имен ${ID}
+[ _"${1}" == _"" ]           && exec sudo -u ${User} /usr/bin/firefox "$@"
+[ _"${1}" == _"/bin/bash"  ] && exec ip netns exec ${ID} /bin/bash --rcfile <(echo "PS1=\"${ID}> \"" )
+exec ip netns exec ${ID} "$@"                          # Запускаем прогу в пространство имен ${ID}
 #unshare --net=/run/netns/${ID} --pid --uts --ipc --fork bash  # Для будущих наработак ;)

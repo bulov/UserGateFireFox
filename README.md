@@ -25,29 +25,26 @@
  -r--r--r-- 1 root root 0 дек  7 10:10 442657190
  -r--r--r-- 1 root root 0 дек  7 18:45 442658056
 
-   Проверить:
- sudo nsFF.sh vbulov /bin/bash
- 442658056> ip -4 a
+   Установить:
+ git clone https://github.com/bulov/UserGateFireFox
+ cd UserGateFireFox
+ sudo nsFF_install.sh
+Шаг 0 создаем /usr/local/bin/firefox
+Шаг 1 настраиваем в /etc/sudoers вызов по sudo /usr/local/bin/nsFF.sh
+Шаг 2 настраиваем иконку /usr/share/applications/firefox.desktop
+Шаг 3 настраиваем поиск firefox из /usr/local/bin
+Шаг 4 создаем коммутатор для сети firefox
+Шаг 5 создаем карту eth1 в сторону UserGate
+Шаг 6 установить запуск firefox со своим IP /usr/local/bin/nsFF.sh
+Шаг 7 Проверить: sudo nsFF.sh xrdp ip a
+
+ sudo nsFF.sh xrdp ip a 
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-66: v-442658056@if67: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000 link-netnsid 0
+66: v-117@if67: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000 link-netnsid 0
     inet 192.168.323.200/24 scope global v-442658056
        valid_lft forever preferred_lft forever
-
-   Установить:
- git clone git@github.com:bulov/UserGateFireFox
- cd UserGateFireFox
- sudo nsFF_install.sh
-
-   Что делаем:
- Шаг 1 создаем /usr/local/bin/firefox
- Шаг 2 настраиваем в /etc/sudoers вызов по sudo /usr/local/bin/ns-FF.sh
- Шаг 3 настраиваем иконку /usr/share/applications/firefox.desktop
- Шаг 4 настраиваем поиск firefox из /usr/local/bin
- Шаг 5 создаем коммутатор  для сети firefox
- Шаг 6 создаем карту eth1 в сторону UserGate
- Шаг 7 установить запуск firefox со своим IP  /usr/local/bin/nsFF.sh
 
    Доработать напильником под свою LAN /usr/local/bin/nsFF.sh ;)
 
