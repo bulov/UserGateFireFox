@@ -22,7 +22,8 @@ ip netns exec ${ID} ip link set dev lo up              # Активизируе�
 ip netns exec ${ID} ip addr add ${IP} dev v-${ID}      # Назначаем адрес.
 ip netns exec ${ID} ip link set dev v-${ID} up         # Активизируем устройство.
 ip netns exec ${ID} ip route add default via ${GW} dev v-${ID} # Маршрут по умолчанию.
-[ _"${1}" == _"" ]           && exec sudo -u ${User} /usr/bin/firefox "$@"
+						       # Запускаем прогу в пространство имен ${ID}
+[ _"${1}" == _"" ]           && exec ip netns exec ${ID} exec sudo -u ${User} /usr/bin/firefox
 [ _"${1}" == _"/bin/bash"  ] && exec ip netns exec ${ID} /bin/bash --rcfile <(echo "PS1=\"${ID}> \"" )
-exec ip netns exec ${ID} "$@"                          # Запускаем прогу в пространство имен ${ID}
+				exec ip netns exec ${ID} "$@"
 #unshare --net=/run/netns/${ID} --pid --uts --ipc --fork bash  # Для будущих наработак ;)
